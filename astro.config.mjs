@@ -25,11 +25,12 @@ import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { defineConfig } from 'astro/config'
 // https://astro.build/config
 export default defineConfig({
-	site: "https://mizuki.mysqil.com/",
+	site: 'https://belgnas.github.io',
 
-	base: "/",
+	base: '/',
 	trailingSlash: "always",
 	integrations: [
 		tailwind({

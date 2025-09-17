@@ -6,6 +6,7 @@ export const zh_TW: Translation = {
 	[Key.about]: "關於我們",
 	[Key.archive]: "彙整",
 	[Key.search]: "搜尋",
+	[Key.other]: "其他",
 
 	[Key.tags]: "標籤",
 	[Key.categories]: "分類",
@@ -14,6 +15,10 @@ export const zh_TW: Translation = {
 	[Key.tableOfContents]: "目錄",
 
 	[Key.comments]: "評論",
+
+	// 公告栏
+	[Key.announcement]: "公告",
+	[Key.announcementClose]: "關閉",
 
 	[Key.untitled]: "無標題",
 	[Key.uncategorized]: "未分類",
@@ -41,12 +46,19 @@ export const zh_TW: Translation = {
 	[Key.anime]: "追番",
 	[Key.diary]: "即刻短文",
 
-	// 追番統計
+	// 番劇頁面
+	[Key.animeTitle]: "我的追番記錄",
+	[Key.animeSubtitle]: "記錄我的二次元之旅",
+	[Key.animeList]: "追番列表",
 	[Key.animeTotal]: "總數",
 	[Key.animeWatching]: "追番中",
 	[Key.animeCompleted]: "已追完",
+	[Key.animeAvgRating]: "平均評分",
 	[Key.animeStatusWatching]: "追番中",
 	[Key.animeStatusCompleted]: "已追完",
+	[Key.animeStatusPlanned]: "計劃中",
+	[Key.animeYear]: "年份",
+	[Key.animeStudio]: "製作",
 
 	// 短文頁面
 	[Key.diarySubtitle]: "隨時隨地，分享生活",
@@ -66,6 +78,15 @@ export const zh_TW: Translation = {
 
 	// 音樂播放器
 	[Key.playlist]: "播放清單",
+
+	// 相冊頁面
+	[Key.albums]: "相冊",
+	[Key.albumsSubtitle]: "記錄生活中的美好瞬間",
+	[Key.albumsEmpty]: "暫無相冊",
+	[Key.albumsEmptyDesc]: "還沒有創建任何相冊，快去添加一些美好的回憶吧！",
+	[Key.albumsBackToList]: "返回相冊",
+	[Key.albumsPhotoCount]: "張照片",
+	[Key.albumsPhotosCount]: "張照片",
 
 	// 專案頁面
 	[Key.projects]: "專案",
@@ -145,4 +166,42 @@ export const zh_TW: Translation = {
 	[Key.timelineCurrentRole]: "目前職位",
 	[Key.timelineEmployed]: "在職",
 	[Key.timelineAvailable]: "可工作",
+
+	// 密碼保護
+	[Key.passwordProtected]: "密碼保護",
+	[Key.passwordProtectedTitle]: "此內容受密碼保護",
+	[Key.passwordProtectedDescription]: "請輸入密碼以查看受保護的內容",
+	[Key.passwordPlaceholder]: "請輸入密碼",
+	[Key.passwordUnlock]: "解鎖",
+	[Key.passwordUnlocking]: "解鎖中...",
+	[Key.passwordIncorrect]: "密碼錯誤，請重試",
+	[Key.passwordDecryptError]: "解密失敗，請檢查密碼是否正確",
+	[Key.passwordRequired]: "請輸入密碼",
+	[Key.passwordVerifying]: "驗證中...",
+	[Key.passwordDecryptFailed]: "解密失敗，請檢查密碼",
+	[Key.passwordDecryptRetry]: "解密失敗，請重試",
+	[Key.passwordUnlockButton]: "解鎖",
+	[Key.copyFailed]: "複製失敗：",
+	[Key.syntaxHighlightFailed]: "語法高亮失敗：",
+	[Key.autoSyntaxHighlightFailed]: "自動語法高亮也失敗了：",
+	[Key.decryptionError]: "解密過程中發生錯誤：",
+
+	// RSS
+	[Key.rss]: "RSS 訂閱",
+	[Key.rssDescription]: "訂閱獲取最新更新",
+	[Key.rssSubtitle]: "通過 RSS 訂閱，第一時間獲取最新文章和動態",
+	[Key.rssLink]: "RSS 連結",
+	[Key.rssCopyToReader]: "複製連結到你的 RSS 閱讀器",
+	[Key.rssCopyLink]: "複製連結",
+	[Key.rssLatestPosts]: "最新文章",
+	[Key.rssWhatIsRSS]: "什麼是 RSS？",
+	[Key.rssWhatIsRSSDescription]:
+		"RSS（Really Simple Syndication）是一種用於發布經常更新內容的標準格式。通過 RSS，你可以：",
+	[Key.rssBenefit1]: "及時獲取網站最新內容，無需手動訪問",
+	[Key.rssBenefit2]: "在一個地方管理多個網站的訂閱",
+	[Key.rssBenefit3]: "避免錯過重要更新和文章",
+	[Key.rssBenefit4]: "享受無廣告的純淨閱讀體驗",
+	[Key.rssHowToUse]: "推薦使用 Feedly、Inoreader 或其他 RSS 閱讀器來訂閱本站。",
+	[Key.rssCopied]: "RSS 連結已複製到剪貼簿！",
+	[Key.rssCopyFailed]: "複製失敗，請手動複製連結",
 };

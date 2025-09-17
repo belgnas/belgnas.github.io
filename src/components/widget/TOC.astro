@@ -17,7 +17,8 @@ for (const heading of headings) {
 
 const className = Astro.props.class;
 // 修复路由判断逻辑，确保在文章页面能正确显示TOC
-const isPostsRoute = Astro.url.pathname.includes("/posts/") || headings.length > 0;
+const isPostsRoute =
+	Astro.url.pathname.includes("/posts/") || headings.length > 0;
 
 const removeTailingHash = (text: string) => {
 	let lastIndexOfHash = text.lastIndexOf("#");
@@ -169,31 +170,15 @@ class TableOfContents extends HTMLElement {
             const targetElement = document.getElementById(id);
             
             if (targetElement) {
-                // 计算目标位置
-                const targetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - 80; // 80px偏移量
+                // 计算目标位置，与移动端保持一致
+                const navbarHeight = 80; // 导航栏高度
+                const targetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
                 
-                // 检查是否使用了OverlayScrollbars
-                const bodyElement = document.querySelector('body');
-                const osInstance = bodyElement && (bodyElement as any).osInstance;
-                
-                if (osInstance && osInstance.elements) {
-                    // 如果使用了OverlayScrollbars，使用其API进行平滑滚动
-                    try {
-                        const { viewport } = osInstance.elements();
-                        if (viewport && viewport.scrollTo) {
-                            viewport.scrollTo({ top: targetTop, behavior: 'smooth' });
-                        } else {
-                            // 降级到原生滚动
-                            window.scrollTo({ top: targetTop, behavior: 'smooth' });
-                        }
-                    } catch (error) {
-                        // 如果OverlayScrollbars API调用失败，降级到原生滚动
-                        window.scrollTo({ top: targetTop, behavior: 'smooth' });
-                    }
-                } else {
-                    // 使用原生滚动
-                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
-                }
+                // 使用与移动端相同的滚动方式
+                window.scrollTo({
+                    top: targetTop,
+                    behavior: "smooth"
+                });
             }
             
             const idx = this.headingIdxMap.get(id);
@@ -277,11 +262,12 @@ class TableOfContents extends HTMLElement {
         // 从当前页面重新获取标题
         const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
             .filter(h => h.id) // 只包含有id的标题
-            .map(h => ({
-                depth: parseInt(h.tagName.substring(1)),
-                slug: h.id,
-                text: h.textContent || ''
-            }));
+                .map(h => ({
+                    depth: parseInt(h.tagName.substring(1)),
+                    slug: h.id,
+                    // 去除标题开头和结尾的 # 及空格
+                    text: (h.textContent || '').replace(/^#+\s*/, '').replace(/#+\s*$/, '')
+                }));
         
         // 如果没有标题，清空TOC
         if (headings.length === 0) {

@@ -6,6 +6,7 @@ export const ja: Translation = {
 	[Key.about]: "私たちについて",
 	[Key.archive]: "Archive",
 	[Key.search]: "検索",
+	[Key.other]: "その他",
 
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",
@@ -45,12 +46,19 @@ export const ja: Translation = {
 	[Key.anime]: "アニメ",
 	[Key.diary]: "つぶやき",
 
-	// 追番统计
+	// 番剧页面
+	[Key.animeTitle]: "アニメコレクション",
+	[Key.animeSubtitle]: "私のアニメ旅行記録",
+	[Key.animeList]: "アニメリスト",
 	[Key.animeTotal]: "合計",
 	[Key.animeWatching]: "視聴中",
 	[Key.animeCompleted]: "視聴済み",
+	[Key.animeAvgRating]: "平均評価",
 	[Key.animeStatusWatching]: "視聴中",
 	[Key.animeStatusCompleted]: "視聴済み",
+	[Key.animeStatusPlanned]: "予定",
+	[Key.animeYear]: "年",
+	[Key.animeStudio]: "制作会社",
 
 	// 短文页面
 	[Key.diarySubtitle]: "いつでもどこでも、生活をシェア",
@@ -71,6 +79,16 @@ export const ja: Translation = {
 
 	// 音楽プレーヤー
 	[Key.playlist]: "プレイリスト",
+
+	// 相册页面
+	[Key.albums]: "アルバム",
+	[Key.albumsSubtitle]: "人生の美しい瞬間を記録する",
+	[Key.albumsEmpty]: "アルバムなし",
+	[Key.albumsEmptyDesc]:
+		"まだアルバムがありません。美しい思い出を追加しましょう！",
+	[Key.albumsBackToList]: "アルバムに戻る",
+	[Key.albumsPhotoCount]: "枚の写真",
+	[Key.albumsPhotosCount]: "枚の写真",
 
 	// プロジェクトページ
 	[Key.projects]: "プロジェクト",
@@ -150,4 +168,46 @@ export const ja: Translation = {
 	[Key.timelineCurrentRole]: "現在の役職",
 	[Key.timelineEmployed]: "在職中",
 	[Key.timelineAvailable]: "利用可能",
+
+	// 密码保护
+	[Key.passwordProtected]: "パスワード保護",
+	[Key.passwordProtectedTitle]: "このコンテンツはパスワードで保護されています",
+	// RSS
+	[Key.rss]: "RSS",
+	[Key.rssDescription]: "RSSフィード",
+	[Key.rssSubtitle]: "最新の投稿を購読",
+	[Key.rssLink]: "RSSリンク",
+	[Key.rssCopyToReader]: "RSSリーダーにリンクをコピー",
+	[Key.rssCopyLink]: "リンクをコピー",
+	[Key.rssLatestPosts]: "最新の投稿",
+	[Key.rssWhatIsRSS]: "RSSとは？",
+	[Key.rssWhatIsRSSDescription]:
+		"RSS（Really Simple Syndication）は、頻繁に更新されるコンテンツを公開するための標準フォーマットです。RSSを使用すると、以下のことができます：",
+	[Key.rssBenefit1]: "手動で訪問せずにウェブサイトの最新コンテンツを取得",
+	[Key.rssBenefit2]: "複数のウェブサイトの購読を一箇所で管理",
+	[Key.rssBenefit3]: "重要な更新や記事を見逃さない",
+	[Key.rssBenefit4]: "広告なしのクリーンな読書体験を楽しむ",
+	[Key.rssHowToUse]:
+		"Feedly、Inoreader、または他のRSSリーダーを使用してこのサイトを購読することをお勧めします。",
+	[Key.rssCopied]: "RSSリンクがクリップボードにコピーされました！",
+	[Key.rssCopyFailed]: "コピーに失敗しました。リンクを手動でコピーしてください",
+
+	[Key.passwordProtectedDescription]:
+		"保護されたコンテンツを表示するにはパスワードを入力してください",
+	[Key.passwordPlaceholder]: "パスワードを入力してください",
+	[Key.passwordUnlock]: "ロック解除",
+	[Key.passwordUnlocking]: "ロック解除中...",
+	[Key.passwordIncorrect]: "パスワードが間違っています。もう一度お試しください",
+	[Key.passwordDecryptError]:
+		"復号化に失敗しました。パスワードが正しいか確認してください",
+	[Key.passwordRequired]: "パスワードを入力してください",
+	[Key.passwordVerifying]: "検証中...",
+	[Key.passwordDecryptFailed]:
+		"復号化に失敗しました。パスワードを確認してください",
+	[Key.passwordDecryptRetry]: "復号化に失敗しました。再試行してください",
+	[Key.passwordUnlockButton]: "ロック解除",
+	[Key.copyFailed]: "コピーに失敗しました:",
+	[Key.syntaxHighlightFailed]: "シンタックスハイライトに失敗しました:",
+	[Key.autoSyntaxHighlightFailed]: "自動シンタックスハイライトも失敗しました:",
+	[Key.decryptionError]: "復号化中にエラーが発生しました:",
 };

@@ -3,6 +3,7 @@ import type {
 	CommentConfig,
 	ExpressiveCodeConfig,
 	FooterConfig,
+	FullscreenWallpaperConfig,
 	LicenseConfig,
 	MusicPlayerConfig,
 	NavBarConfig,
@@ -39,27 +40,29 @@ export const siteConfig: SiteConfig = {
 		ignoreTags: ["script", "style", "code", "pre"], // 翻译时忽略的 HTML 标签
 	},
 	banner: {
-		enable: true, // 暂时禁用横幅以提高加载速度
+		enable: true, // 是否启动Banner壁纸模式
 
 		// 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播
 		src: {
 			desktop: [
-				"assets/desktop-banner/1.webp",
-				"assets/desktop-banner/2.webp",
-				"assets/desktop-banner/3.webp",
-				"assets/desktop-banner/4.webp",
-				"assets/desktop-banner/5.webp",
-				"assets/desktop-banner/6.webp",
-				"assets/desktop-banner/7.webp",
+				"/assets/desktop-banner/d1.webp",
+				"/assets/desktop-banner/d2.webp",
+				"/assets/desktop-banner/d3.webp",
+				"/assets/desktop-banner/d4.webp",
+				"/assets/desktop-banner/d5.webp",
+				"/assets/desktop-banner/d6.webp",
+				"/assets/desktop-banner/d7.webp",
+				"/assets/desktop-banner/d8.webp",
 			], // 桌面横幅图片
 			mobile: [
-				"assets/mobile-banner/1.webp",
-				"assets/mobile-banner/2.webp",
-				"assets/mobile-banner/3.webp",
-				"assets/mobile-banner/4.webp",
-				"assets/mobile-banner/5.webp",
-				"assets/mobile-banner/6.webp",
-				"assets/mobile-banner/7.webp",
+				"/assets/mobile-banner/m1.webp",
+				"/assets/mobile-banner/m2.webp",
+				"/assets/mobile-banner/m3.webp",
+				"/assets/mobile-banner/m4.webp",
+				"/assets/mobile-banner/m5.webp",
+				"/assets/mobile-banner/m6.webp",
+				"/assets/mobile-banner/m7.webp",
+				"/assets/mobile-banner/m8.webp",
 			], // 移动横幅图片
 		}, // 使用本地横幅图片
 
@@ -105,6 +108,7 @@ export const siteConfig: SiteConfig = {
 		enable: true, // 启用目录功能
 		depth: 3, // 目录深度，1-6，1 表示只显示 h1 标题，2 表示显示 h1 和 h2 标题，依此类推
 	},
+	generateOgImages: false, // 启用生成OpenGraph图片功能,注意开启后要渲染很长时间，不建议本地调试的时候开启
 	favicon: [
 		// 留空以使用默认 favicon
 		// {
@@ -113,6 +117,46 @@ export const siteConfig: SiteConfig = {
 		//   sizes: '32x32',              // 可选，图标大小
 		// }
 	],
+
+	// 字体配置
+	font: {
+		zenMaruGothic: {
+			enable: false, // 不启用全局圆体
+		},
+	},
+};
+export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
+	enable: true, // 启用全屏壁纸功能,非Banner模式下生效
+	src: {
+		desktop: [
+			"/assets/desktop-banner/d1.webp",
+			"/assets/desktop-banner/d2.webp",
+			"/assets/desktop-banner/d3.webp",
+			"/assets/desktop-banner/d4.webp",
+			"/assets/desktop-banner/d5.webp",
+			"/assets/desktop-banner/d6.webp",
+			"/assets/desktop-banner/d7.webp",
+			"/assets/desktop-banner/d8.webp",
+		], // 桌面横幅图片
+		mobile: [
+			"/assets/mobile-banner/1.webp",
+			"/assets/mobile-banner/2.webp",
+			"/assets/mobile-banner/3.webp",
+			"/assets/mobile-banner/4.webp",
+			"/assets/mobile-banner/5.webp",
+			"/assets/mobile-banner/6.webp",
+			"/assets/mobile-banner/7.webp",
+			"/assets/mobile-banner/8.webp",
+		], // 移动横幅图片
+	}, // 使用本地横幅图片
+	position: "center", // 壁纸位置，等同于 object-position
+	carousel: {
+		enable: true, // 启用轮播
+		interval: 1, // 轮播间隔时间（秒）
+	},
+	zIndex: -1, // 层级，确保壁纸在背景层
+	opacity: 0.8, // 壁纸透明度
+	blur: 1, // 背景模糊程度
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -123,49 +167,67 @@ export const navBarConfig: NavBarConfig = {
 		{
 			name: "链接",
 			url: "/links/",
+			icon: "material-symbols:link",
 			children: [
 				{
 					name: "GitHub",
 					url: "https://github.com/belgnas/belgnas.github.io",
 					external: true,
+					icon: "fa6-brands:github",
 				},
 				{
 					name: "Bilibili",
 					url: "https://space.bilibili.com/1808504869",
 					external: true,
+					icon: "fa6-brands:bilibili",
 				},
 				// {
 				// 	name: "Gitee",
 				// 	url: "https://gitee.com/matsuzakayuki/Mizuki",
 				// 	external: true,
+				// 	icon: "mdi:git",
 				// },
 			],
 		},
 		{
 			name: "我的",
 			url: "/content/",
-			children: [LinkPreset.Anime, LinkPreset.Diary, LinkPreset.Gallery],
+			icon: "material-symbols:person",
+			children: [
+				LinkPreset.Anime,
+				LinkPreset.Diary,
+				{
+					name: "Gallery",
+					url: "/albums/",
+					icon: "material-symbols:photo-library",
+				},
+			],
 		},
 		{
 			name: "关于",
 			url: "/content/",
+			icon: "material-symbols:info",
 			children: [LinkPreset.About, LinkPreset.Friends],
 		},
 		{
 			name: "其他",
 			url: "#",
+			icon: "material-symbols:more-horiz",
 			children: [
 				{
-					name: "项目展示",
+					name: "项目",
 					url: "/projects/",
+					icon: "material-symbols:work",
 				},
 				{
-					name: "技能展示",
+					name: "技能",
 					url: "/skills/",
+					icon: "material-symbols:psychology",
 				},
 				{
 					name: "时间线",
 					url: "/timeline/",
+					icon: "material-symbols:timeline",
 				},
 			],
 		},
@@ -191,8 +253,13 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/belgnas",
+			url: "https://github.com/belgnas/belgnas.github.io",
 		},
+		// {
+		// 	name: "Discord",
+		// 	icon: "fa6-brands:discord",
+		// 	url: "https://discord.gg/MqW6TcQtVM",
+		// },
 	],
 	// Umami统计部份，记得在layout插入Umami的head标签
 	umami: {
@@ -218,6 +285,7 @@ export const commentConfig: CommentConfig = {
 	enable: false, // 启用评论功能。当设置为 false 时，评论组件将不会显示在文章区域。
 	twikoo: {
 		envId: "https://twikoo.vercel.app",
+		lang: "en", // 设置 Twikoo 评论系统语言为英文
 	},
 };
 
@@ -359,8 +427,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 };
 
 export const sakuraConfig: SakuraConfig = {
-	enable: true, // 默认关闭樱花特效
-	sakuraNum: 8, // 樱花数量
+	enable: false, // 默认关闭樱花特效
+	sakuraNum: 21, // 樱花数量
 	limitTimes: -1, // 樱花越界限制次数，-1为无限循环
 	size: {
 		min: 0.5, // 樱花最小尺寸倍数
@@ -379,6 +447,31 @@ export const sakuraConfig: SakuraConfig = {
 	},
 	zIndex: 100, // 层级，确保樱花在合适的层级显示
 };
+
+// Pio 看板娘配置
+export const pioConfig: import("./types/config").PioConfig = {
+	enable: true, // 启用看板娘
+	models: ["/pio/models/pio/model.json"], // 默认模型路径
+	position: "left", // 默认位置在右侧
+	width: 280, // 默认宽度
+	height: 250, // 默认高度
+	mode: "draggable", // 默认为可拖拽模式
+	hiddenOnMobile: true, // 默认在移动设备上隐藏
+	dialog: {
+		welcome: "欢迎喵，欢迎喵", // 欢迎词
+		touch: [
+			"在玩什么喵",
+			"不要戳我的头啦",
+			"hentai",
+			"今天也请加油喵",
+		], // 触摸提示
+		home: "点击这里返回首页喵", // 首页提示
+		skin: ["想看看我的新衣服吗？", "新衣服看起来还不错喵"], // 换装提示
+		close: "QWQ 下次见喵", // 关闭提示
+		link: "https://github.com/belgnas/belgnas.github.io", // 关于链接
+	},
+};
+
 // 导出所有配置的统一接口
 export const widgetConfigs = {
 	profile: profileConfig,
@@ -386,4 +479,6 @@ export const widgetConfigs = {
 	music: musicPlayerConfig,
 	layout: sidebarLayoutConfig,
 	sakura: sakuraConfig,
+	fullscreenWallpaper: fullscreenWallpaperConfig,
+	pio: pioConfig, // 添加 pio 配置
 } as const;

@@ -1,13 +1,13 @@
-// 时间线数据配置文件
-// 用于管理时间线页面的数据
+// Timeline data configuration file
+// Used to manage data for the timeline page
 
 export interface TimelineItem {
 	id: string;
 	title: string;
 	description: string;
-	type: 'education' | 'work' | 'project' | 'achievement';
+	type: "education" | "work" | "project" | "achievement";
 	startDate: string;
-	endDate?: string; // 如果为空表示至今
+	endDate?: string; // If empty, it means current
 	location?: string;
 	organization?: string;
 	position?: string;
@@ -16,7 +16,7 @@ export interface TimelineItem {
 	links?: {
 		name: string;
 		url: string;
-		type: 'website' | 'certificate' | 'project' | 'other';
+		type: "website" | "certificate" | "project" | "other";
 	}[];
 	icon?: string; // Iconify icon name
 	color?: string;
@@ -25,210 +25,263 @@ export interface TimelineItem {
 
 export const timelineData: TimelineItem[] = [
 	{
-		id: 'current-work',
-		title: '全栈开发工程师',
-		description: '负责Web应用的前后端开发，参与产品架构设计和技术选型，带领团队完成多个重要项目。',
-		type: 'work',
-		startDate: '2023-06-01',
-		location: '北京',
-		organization: 'TechCorp Inc.',
-		position: 'Senior Full Stack Developer',
-		skills: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'AWS'],
+		id: "current-study",
+		title: "Studying Computer Science and Technology",
+		description:
+			"Currently studying Computer Science and Technology, focusing on web development and software engineering.",
+		type: "education",
+		startDate: "2022-09-01",
+		location: "Beijing",
+		organization: "Beijing Institute of Technology",
+		skills: ["Java", "Python", "JavaScript", "HTML/CSS", "MySQL"],
 		achievements: [
-			'主导开发了公司核心产品的前端架构重构',
-			'优化系统性能，页面加载速度提升40%',
-			'建立了完善的代码审查和测试流程'
+			"Current GPA: 3.6/4.0",
+			"Completed data structures and algorithms course project",
+			"Participated in multiple course project developments",
 		],
-		icon: 'material-symbols:work',
-		color: '#2563EB',
-		featured: true
+		icon: "material-symbols:school",
+		color: "#059669",
+		featured: true,
 	},
 	{
-		id: 'mizuki-project',
-		title: 'Mizuki博客主题开源项目',
-		description: '基于Astro框架开发的现代化博客主题，获得了社区的广泛认可和使用。',
-		type: 'project',
-		startDate: '2024-01-01',
-		endDate: '2024-06-01',
-		skills: ['Astro', 'TypeScript', 'Tailwind CSS', 'Svelte'],
+		id: "mizuki-blog-project",
+		title: "Mizuki Personal Blog Project",
+		description:
+			"A personal blog website developed using the Astro framework as a practical project for learning frontend technologies.",
+		type: "project",
+		startDate: "2024-06-01",
+		endDate: "2024-08-01",
+		skills: ["Astro", "TypeScript", "Tailwind CSS", "Git"],
 		achievements: [
-			'GitHub获得500+ Stars',
-			'支持多语言和主题切换',
-			'完善的文档和示例'
+			"Mastered modern frontend development tech stack",
+			"Learned responsive design and user experience optimization",
+			"Completed the full process from design to deployment",
 		],
 		links: [
 			{
-				name: 'GitHub Repository',
-				url: 'https://github.com/example/mizuki',
-				type: 'project'
+				name: "GitHub Repository",
+				url: "https://github.com/example/mizuki-blog",
+				type: "project",
 			},
 			{
-				name: 'Live Demo',
-				url: 'https://mizuki-demo.example.com',
-				type: 'website'
-			}
+				name: "Live Demo",
+				url: "https://mizuki-demo.example.com",
+				type: "website",
+			},
 		],
-		icon: 'material-symbols:code',
-		color: '#059669',
-		featured: true
+		icon: "material-symbols:code",
+		color: "#7C3AED",
+		featured: true,
 	},
 	{
-		id: 'frontend-developer',
-		title: '前端开发工程师',
-		description: '专注于React生态系统开发，负责多个企业级Web应用的前端架构和开发。',
-		type: 'work',
-		startDate: '2022-03-01',
-		endDate: '2023-05-31',
-		location: '上海',
-		organization: 'WebTech Solutions',
-		position: 'Frontend Developer',
-		skills: ['React', 'JavaScript', 'CSS3', 'Webpack', 'Jest'],
+		id: "summer-internship-2024",
+		title: "Frontend Development Intern",
+		description:
+			"Summer internship at an internet company, participating in frontend development of web applications.",
+		type: "work",
+		startDate: "2024-07-01",
+		endDate: "2024-08-31",
+		location: "Beijing",
+		organization: "TechStart Internet Company",
+		position: "Frontend Development Intern",
+		skills: ["React", "JavaScript", "CSS3", "Git", "Figma"],
 		achievements: [
-			'开发了公司主要产品的用户界面',
-			'建立了组件库和设计系统',
-			'提升了团队的开发效率和代码质量'
+			"Completed user interface component development",
+			"Learned team collaboration and code standards",
+			"Received outstanding internship performance certificate",
 		],
-		icon: 'material-symbols:work',
-		color: '#DC2626'
+		icon: "material-symbols:work",
+		color: "#DC2626",
+		featured: true,
 	},
 	{
-		id: 'react-certification',
-		title: 'React开发者认证',
-		description: '通过了React官方认证考试，证明了在React开发方面的专业能力。',
-		type: 'achievement',
-		startDate: '2022-08-15',
-		organization: 'Meta (Facebook)',
-		links: [
-			{
-				name: 'Certificate',
-				url: 'https://certificates.example.com/react-cert',
-				type: 'certificate'
-			}
-		],
-		icon: 'material-symbols:verified',
-		color: '#7C3AED'
-	},
-	{
-		id: 'computer-science-degree',
-		title: '计算机科学与技术学士学位',
-		description: '系统学习了计算机科学基础理论，包括数据结构、算法、操作系统、数据库等核心课程。',
-		type: 'education',
-		startDate: '2018-09-01',
-		endDate: '2022-06-30',
-		location: '北京',
-		organization: '北京理工大学',
-		skills: ['Java', 'C++', 'Python', 'MySQL', 'Linux'],
+		id: "web-development-course",
+		title: "Completed Web Development Online Course",
+		description:
+			"Completed a full-stack web development online course, systematically learning frontend and backend development technologies.",
+		type: "achievement",
+		startDate: "2024-01-15",
+		endDate: "2024-05-30",
+		organization: "Mooc Website",
+		skills: ["HTML", "CSS", "JavaScript", "Node.js", "Express"],
 		achievements: [
-			'GPA: 3.8/4.0',
-			'获得校级优秀学生奖学金',
-			'参与多个课程项目和实习'
-		],
-		icon: 'material-symbols:school',
-		color: '#059669',
-		featured: true
-	},
-	{
-		id: 'internship-experience',
-		title: '软件开发实习生',
-		description: '在大学期间的实习经历，参与了Web应用开发和数据库设计工作。',
-		type: 'work',
-		startDate: '2021-07-01',
-		endDate: '2021-09-30',
-		location: '北京',
-		organization: 'StartupTech',
-		position: 'Software Development Intern',
-		skills: ['JavaScript', 'Vue.js', 'Node.js', 'MySQL'],
-		achievements: [
-			'完成了用户管理系统的开发',
-			'学习了敏捷开发流程',
-			'获得了实习优秀表现奖'
-		],
-		icon: 'material-symbols:work',
-		color: '#EA580C'
-	},
-	{
-		id: 'hackathon-winner',
-		title: '黑客马拉松比赛获奖',
-		description: '在48小时内开发了一个创新的Web应用，获得了最佳技术实现奖。',
-		type: 'achievement',
-		startDate: '2021-11-20',
-		endDate: '2021-11-22',
-		location: '上海',
-		organization: 'TechHackathon 2021',
-		skills: ['React', 'Express.js', 'MongoDB', 'Socket.io'],
-		achievements: [
-			'获得最佳技术实现奖',
-			'团队协作完成复杂项目',
-			'在短时间内学习新技术'
+			"Received course completion certificate",
+			"Completed 5 practical projects",
+			"Mastered full-stack development fundamentals",
 		],
 		links: [
 			{
-				name: 'Project Demo',
-				url: 'https://hackathon-project.example.com',
-				type: 'project'
-			}
+				name: "Course Certificate",
+				url: "https://certificates.example.com/web-dev",
+				type: "certificate",
+			},
 		],
-		icon: 'material-symbols:emoji-events',
-		color: '#DC2626'
+		icon: "material-symbols:verified",
+		color: "#059669",
 	},
 	{
-		id: 'programming-start',
-		title: '开始编程学习',
-		description: '第一次接触编程，从HTML和CSS开始，逐步学习JavaScript和其他技术。',
-		type: 'education',
-		startDate: '2018-01-01',
-		skills: ['HTML', 'CSS', 'JavaScript'],
+		id: "student-management-system",
+		title: "Student Management System Course Project",
+		description:
+			"Final project for the database course, developed a complete student information management system.",
+		type: "project",
+		startDate: "2023-11-01",
+		endDate: "2023-12-15",
+		skills: ["Java", "MySQL", "Swing", "JDBC"],
 		achievements: [
-			'完成了第一个个人网站',
-			'掌握了Web开发基础',
-			'培养了对编程的兴趣'
+			"Received excellent course project grade",
+			"Implemented complete CRUD functionality",
+			"Learned database design and optimization",
 		],
-		icon: 'material-symbols:code',
-		color: '#7C3AED'
-	}
+		icon: "material-symbols:database",
+		color: "#EA580C",
+	},
+	{
+		id: "programming-contest",
+		title: "University Programming Contest",
+		description:
+			"Participated in a programming contest held by the university, improving algorithm and programming skills.",
+		type: "achievement",
+		startDate: "2023-10-20",
+		location: "Beijing Institute of Technology",
+		organization: "School of Computer Science",
+		skills: ["C++", "Algorithms", "Data Structures"],
+		achievements: [
+			"Won third prize in university contest",
+			"Improved algorithmic thinking ability",
+			"Strengthened programming fundamentals",
+		],
+		icon: "material-symbols:emoji-events",
+		color: "#7C3AED",
+	},
+	{
+		id: "part-time-tutor",
+		title: "Part-time Programming Tutor",
+		description:
+			"Provided programming tutoring for high school students, helping them learn Python basics.",
+		type: "work",
+		startDate: "2023-09-01",
+		endDate: "2024-01-31",
+		position: "Programming Tutor",
+		skills: ["Python", "Teaching", "Communication"],
+		achievements: [
+			"Helped 3 students master Python basics",
+			"Improved expression and communication skills",
+			"Gained teaching experience",
+		],
+		icon: "material-symbols:school",
+		color: "#059669",
+	},
+	{
+		id: "high-school-graduation",
+		title: "High School Graduation",
+		description:
+			"Graduated from high school with excellent grades and was admitted to the Computer Science and Technology program at Beijing Institute of Technology.",
+		type: "education",
+		startDate: "2019-09-01",
+		endDate: "2022-06-30",
+		location: "Jinan, Shandong",
+		organization: "No.1 High School of Jinan",
+		achievements: [
+			"College entrance exam score: 620",
+			"Received municipal model student award",
+			"Won provincial second prize in math competition",
+		],
+		icon: "material-symbols:school",
+		color: "#2563EB",
+	},
+	{
+		id: "first-programming-experience",
+		title: "First Programming Experience",
+		description:
+			"First encountered programming in high school IT class, started learning Python basic syntax.",
+		type: "education",
+		startDate: "2021-03-01",
+		skills: ["Python", "Basic Programming Concepts"],
+		achievements: [
+			'Completed first "Hello World" program',
+			"Learned basic loops and conditional statements",
+			"Developed interest in programming",
+		],
+		icon: "material-symbols:code",
+		color: "#7C3AED",
+	},
+	{
+		id: "english-certificate",
+		title: "English CET-4 Certificate",
+		description:
+			"Passed the College English Test Band 4, acquired basic English reading and writing skills.",
+		type: "achievement",
+		startDate: "2023-06-15",
+		organization: "National College English Test Committee",
+		achievements: [
+			"CET-4 score: 550",
+			"Improved English technical documentation reading ability",
+			"Laid foundation for future study of foreign technical materials",
+		],
+		links: [
+			{
+				name: "CET-4 Certificate",
+				url: "https://certificates.example.com/cet4",
+				type: "certificate",
+			},
+		],
+		icon: "material-symbols:translate",
+		color: "#059669",
+	},
 ];
 
-// 获取时间线统计信息
+// Get timeline statistics
 export const getTimelineStats = () => {
 	const total = timelineData.length;
 	const byType = {
-		education: timelineData.filter(item => item.type === 'education').length,
-		work: timelineData.filter(item => item.type === 'work').length,
-		project: timelineData.filter(item => item.type === 'project').length,
-		achievement: timelineData.filter(item => item.type === 'achievement').length
+		education: timelineData.filter((item) => item.type === "education").length,
+		work: timelineData.filter((item) => item.type === "work").length,
+		project: timelineData.filter((item) => item.type === "project").length,
+		achievement: timelineData.filter((item) => item.type === "achievement")
+			.length,
 	};
 
 	return { total, byType };
 };
 
-// 按类型获取时间线项目
+// Get timeline items by type
 export const getTimelineByType = (type?: string) => {
-	if (!type || type === 'all') {
-		return timelineData.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+	if (!type || type === "all") {
+		return timelineData.sort(
+			(a, b) =>
+				new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+		);
 	}
 	return timelineData
-		.filter(item => item.type === type)
-		.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+		.filter((item) => item.type === type)
+		.sort(
+			(a, b) =>
+				new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+		);
 };
 
-// 获取特色时间线项目
+// Get featured timeline items
 export const getFeaturedTimeline = () => {
 	return timelineData
-		.filter(item => item.featured)
-		.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+		.filter((item) => item.featured)
+		.sort(
+			(a, b) =>
+				new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+		);
 };
 
-// 获取当前进行中的项目
+// Get current ongoing items
 export const getCurrentItems = () => {
-	return timelineData.filter(item => !item.endDate);
+	return timelineData.filter((item) => !item.endDate);
 };
 
-// 计算总工作经验
+// Calculate total work experience
 export const getTotalWorkExperience = () => {
-	const workItems = timelineData.filter(item => item.type === 'work');
+	const workItems = timelineData.filter((item) => item.type === "work");
 	let totalMonths = 0;
 
-	workItems.forEach(item => {
+	workItems.forEach((item) => {
 		const startDate = new Date(item.startDate);
 		const endDate = item.endDate ? new Date(item.endDate) : new Date();
 		const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
@@ -238,6 +291,6 @@ export const getTotalWorkExperience = () => {
 
 	return {
 		years: Math.floor(totalMonths / 12),
-		months: totalMonths % 12
+		months: totalMonths % 12,
 	};
 };

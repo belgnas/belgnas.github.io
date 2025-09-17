@@ -20,6 +20,14 @@ export type SiteConfig = {
 		hue: number;
 		fixed: boolean;
 	};
+
+	// 添加字体配置
+	font: {
+		zenMaruGothic: {
+			enable: boolean; // 是否使用 ZenMaruGothic-Black 作为全局字体
+		};
+	};
+
 	translate?: {
 		enable: boolean; // 是否启用翻译功能
 		service?: string; // 翻译服务类型，如 'client.edge'
@@ -43,6 +51,10 @@ export type SiteConfig = {
 			enable: boolean; // 是否启用轮播
 			interval: number; // 轮播间隔时间（秒）
 		};
+		imageApi?: {
+			enable: boolean; // 是否启用图片API
+			url: string; // API地址，返回每行一个图片链接的文本
+		};
 		homeText?: {
 			enable: boolean; // 是否在首页显示自定义文字
 			title?: string; // 主标题
@@ -59,12 +71,15 @@ export type SiteConfig = {
 			text: string;
 			url?: string;
 		};
+		navbar?: {
+			transparentMode?: "semi" | "full" | "semifull"; // 导航栏透明模式
+		};
 	};
 	toc: {
 		enable: boolean;
 		depth: 1 | 2 | 3;
 	};
-
+	generateOgImages: boolean;
 	favicon: Favicon[];
 };
 
@@ -81,7 +96,6 @@ export enum LinkPreset {
 	Friends = 3,
 	Anime = 4,
 	Diary = 5,
-	Gallery = 6,
 	Projects = 7,
 	Skills = 8,
 	Timeline = 9,
@@ -91,6 +105,7 @@ export type NavBarLink = {
 	name: string;
 	url: string;
 	external?: boolean;
+	icon?: string; // 菜单项图标
 	children?: (NavBarLink | LinkPreset)[]; // 支持子菜单，可以是NavBarLink或LinkPreset
 };
 
@@ -189,6 +204,7 @@ export type WidgetComponentType =
 	| "tags"
 	| "toc"
 	| "music-player"
+	| "pio" // 添加 pio 组件类型
 	| "custom";
 
 export type WidgetComponentConfig = {
@@ -222,7 +238,7 @@ export type SidebarLayoutConfig = {
 			desktop: number; // 桌面端断点（px）
 		};
 		layout: {
-			mobile: "hidden" | "bottom" | "drawer"; // 移动端布局模式
+			mobile: "hidden" | "bottom" | "drawer" | "sidebar"; // 移动端布局模式
 			tablet: "sidebar" | "bottom" | "drawer"; // 平板端布局模式
 			desktop: "sidebar"; // 桌面端布局模式
 		};
@@ -249,4 +265,46 @@ export type SakuraConfig = {
 		rotation: number; // 旋转速度
 	};
 	zIndex: number; // 层级，确保樱花在合适的层级显示
+};
+
+export type FullscreenWallpaperConfig = {
+	enable: boolean; // 是否启用全屏壁纸功能
+	src: {
+		desktop?: string | string[]; // 桌面端壁纸图片
+		mobile?: string | string[]; // 移动端壁纸图片
+	};
+	position?: "top" | "center" | "bottom"; // 壁纸位置，等同于 object-position
+	carousel?: {
+		enable: boolean; // 是否启用轮播
+		interval: number; // 轮播间隔时间（秒）
+	};
+	zIndex?: number; // 层级，确保壁纸在合适的层级显示
+	opacity?: number; // 壁纸透明度，0-1之间
+	blur?: number; // 背景模糊程度，单位px
+};
+
+/**
+ * Pio 看板娘配置
+ */
+export type PioConfig = {
+	enable: boolean; // 是否启用看板娘
+	models?: string[]; // 模型文件路径数组
+	position?: "left" | "right"; // 看板娘位置
+	width?: number; // 看板娘宽度
+	height?: number; // 看板娘高度
+	mode?: "static" | "fixed" | "draggable"; // 展现模式
+	hiddenOnMobile?: boolean; // 是否在移动设备上隐藏
+	dialog?: {
+		welcome?: string | string[]; // 欢迎词
+		touch?: string | string[]; // 触摸提示
+		home?: string; // 首页提示
+		skin?: [string, string]; // 换装提示 [切换前, 切换后]
+		close?: string; // 关闭提示
+		link?: string; // 关于链接
+		custom?: Array<{
+			selector: string; // CSS选择器
+			type: "read" | "link"; // 类型
+			text?: string; // 自定义文本
+		}>;
+	};
 };

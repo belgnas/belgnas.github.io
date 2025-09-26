@@ -837,15 +837,274 @@ FROM
 ---
 
 ## 约束
+### 概述
+概念：约束是作用于表中字段上的规则，用于限制存储在表中的数据。（我们可以在创建表时，为表中的字段添加约束，也可以在表创建后，使用ALTER语句添加约束）
+目的：约束是为了保证数据库中数据的正确性、完整性和一致性。
+
+---
+
+### 约束分类：
+| 约束           | 描述                                                     | 关键字      |
+| -------------- | -------------------------------------------------------- | ----------- |
+| 非空约束       | 限制该字段的数据不能为null                               | NOT NULL    |
+| 唯一约束       | 保证该字段的所有数据都是唯一、不重复的                   | UNIQUE      |
+| 主键约束       | 主键是一行数据的唯一标识，要求非空且唯一                 | PRIMARY KEY |
+| 默认约束       | 保存数据时，如果未指定该字段的值，则采用默认值           | DEFAULT     |
+| 检查约束（8.0.1版本后） | 保证字段值满足某一个条件                         | CHECK       |
+| 外键约束       | 用来让两张表的数据之间建立连接，保证数据的一致性和完整性 | FOREIGN KEY |
+ps：
+* 约束是作用于表中字段上的，可以再创建表/修改表的时候添加约束。
+---
+
+### 常用约束
+| 约束条件 | 关键字        |
+| -------- | ------------- |
+| 主键     | PRIMARY KEY   |
+| 自动增长 | AUTO_INCREMENT |
+| 不为空   | NOT NULL      |
+| 唯一     | UNIQUE        |
+| 逻辑条件 | CHECK         |
+| 默认值   | DEFAULT       |
+#### 案例演示
+##### 例子：
+| 字段名 | 字段含义 | 字段类型 | 约束条件 | 约束关键字 |
+| ------ | -------- | -------- | -------- | ---------- |
+| id     | ID唯一标识 | int      | 主键，并且自动增长 | PRIMARY KEY, AUTO_INCREMENT |
+| name   | 姓名     | varchar(10) | 不为空，并且唯一 | NOT NULL, UNIQUE |
+| age    | 年龄     | int      | 大于0，并且小于等于120 | CHECK |
+| status | 状态     | char(1)  | 如果没有指定值，默认为1 | DEFAULT |
+| gender | 性别     | char(1)  | 无       |            |
+##### 代码：
+```mysql
+create table if not exists t_user(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null unique comment '姓名，不为空，并且唯一',
+    age int check (age > 0 and age <= 120) comment '年龄，大于0，并且小于等于120',
+    status char(1) default '1' comment '状态，默认值为1',
+    gender char(1) comment '性别'
+) commit '用户表';
+```
+##### 测试：
+```mysql
+-- 插入数据
+insert into t_user(name, age, status, gender) values('张三', 18, '1', '男');
+insert into t_user(name, age, status, gender) values('李四', 20, '1', '女');
+insert into t_user(name, age, status, gender) values('王五', 22, '1', '男');
+
+-- 插入失败，因为name重复
+insert into t_user(name, age, status, gender) values('张三', 23, '1', '男');
+......（其他的省略）
+```
+
+### 外键约束
+* 概念：外键约束是作用于表中字段上的规则，用于让两张表的数据之间建立连接，保证数据的一致性和完整性。
+* 关键字：`FOREIGN KEY`
+#### 添加外键
+* 语法：（添加外键）
+```mysql
+CREATE TABLE 表名(
+  字段名 数据类型,
+  ...
+  [CONSTRAINT] [外键名称] FOREIGN KEY(外键字段名) REFERENCES 主表(表列名)
+);
+
+ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段名) REFERENCES 主表(主表列名);
+```
+* 例子
+```
+alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references dept(id);
+```
+* 解释：往emp表添加一个外键约束，约束名称为fk_emp_dept_id，外键字段为dept_id，引用的主表为dept，引用的主表字段为id。
+#### 删除外键
+* 语法：
+```mysql
+ALTER TABLE 表名 DROP FOREIGN KEY 外键名称;
+```
+* 例子：
+```mysql
+-- 删除emp表的外键约束
+alter table emp drop foreign key fk_emp_dept_id;
+```
+* 解释：删除emp表的外键约束，约束名称为fk_emp_dept_id。
+---
+
+### 删除/更新行为
+| 行为        | 说明                                                         |
+| ----------- | ------------------------------------------------------------ |
+| NO ACTION   | 当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则不允许删除/更新（与RESTRICT一致） |
+| RESTRICT    | 当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则不允许删除/更新（与NO ACTION一致） |
+| CASCADE     | 当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则也删除/更新外键在子表中的记录 |
+| SET NULL    | 当在父表中删除/更新对应记录时，首先检查该记录是否有对应外键，如果有则设置子表中该外键值为null（要求该外键允许为null） |
+| SET DEFAULT | 父表有变更时，子表将外键设为一个默认值（Innodb不支持）|
+
+* 语法（更改删除/更新行为）
+```
+ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段) REFERENCES 主表名(主表字段名) ON UPDATE 行为 ON DELETE 行为;
+```
+
+* 例子：
+```mysql
+-- 更改emp表的外键约束，约束名称为fk_emp_dept_id，删除/更新行为为CASCADE
+alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references dept(id) on update cascade on delete cascade;
+```
+* 解释：更改emp表的外键约束，约束名称为fk_emp_dept_id，删除/更新行为为CASCADE，当在dept表中删除/更新对应记录时，也会删除/更新emp表中对应记录。
+---
+
+## 多表查询
+### 多表关系
+#### 一对多（多对一）关系
+* 案例：部门与员工
+* 关系：一个部门可以有多个员工，一个员工只归属于一个部门
+* 实现：在多的一方建立外键，指向一的一方的主键
+```mysql
+-- 部门表
+create table if not exists dept(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null unique comment '部门名称，不为空，并且唯一'
+) commit '部门表';
+
+-- 员工表
+create table if not exists emp(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null comment '姓名，不为空',
+    age int check (age > 0 and age <= 120) comment '年龄，大于0，并且小于等于120',
+    status char(1) default '1' comment '状态，默认值为1',
+    gender char(1) comment '性别',
+    dept_id int comment '部门ID，外键，引用部门表的主键'
+) commit '员工表';
+
+-- 为员工表添加外键约束
+alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references dept(id) on update cascade on delete cascade;
+```
+#### 多对多关系
+* 案例：学生与课程
+* 关系：一个学生可以选多门课程，一门课程也可以供多个学生选修
+* 实现：建立第三张中间表，中间表至少包含两个外键，分别关联两方主键
+
+<center>
+
+**学生表(tb_student)**
+| 序 id | name    | no       |
+|-------|---------|----------|
+| 1     | 张三    | 20200101 |
+| 2     | 李四    | 20200102 |
+| 3     | 王五    | 20200103 |
 
 
+**课程表(tb_course)**
+| 序 id | name    |
+|-------|---------|
+| 1     | 语文    |
+| 2     | 数学    |
+| 3     | 英语    |
 
+**学生与课程关系表(tb_student_course)** 
+| 序 id | student_id | course_id |
+|-------|------------|-----------|
+| 1     | 1          | 1         |
+| 2     | 1          | 2         |
+| 3     | 2          | 2         |
+| 4     | 2          | 3         |
+| 5     | 3          | 1         |
+| 6     | 3          | 3         |
+</center>
 
+```mysql
+-- 学生表
+create table if not exists student(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null comment '姓名，不为空'
+    no varchar(10) not null unique comment '学号，不为空，并且唯一'
+) commit '学生表';
 
+insert into student(name, no) values('张三', '20200101'), ('李四', '20200102'), ('王五', '20200103');
 
+-- 课程表
+create table if not exists course(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null comment '姓名，不为空'
+) commit '课程表';
 
+insert into course(name) values('语文'), ('数学'), ('英语');
 
+-- 中间表
+create table if not exists student_course(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    student_id int comment '学生ID，外键，引用学生表的主键',
+    course_id int comment '课程ID，外键，引用课程表的主键',
+    constraint fk_student_course_student_id foreign key(student_id) references student(id) on update cascade on delete cascade,
+    <!-- 学生ID，外键，引用学生表的主键 -->
+    constraint fk_student_course_course_id foreign key(course_id) references course(id) on update cascade on delete cascade,
+    <!-- 课程ID，外键，引用课程表的主键 -->
+) commit '中间表';
 
+insert into student_course(student_id, course_id) values(1, 1), (1, 2), (2, 2), (2, 3), (3, 1), (3, 3);
+```
+#### 一对一关系
+* 案例：用户与用户详情
+* 关系：一对一关系，多用于单表拆分，将一张表的基础字段放在一张表中，其他详情字段放在另一张表中，以提升操作效率
+* 实现：在任意一方加入外键，关联另外一方的主键，并且设置外键为唯一的（UNIQUE）
+
+<center>
+
+**用户基本信息表(tb_user)** 
+| 序 id | name    | age   | gender | phone        |
+|-------|---------|-------|--------|--------------|
+| 1     | 黄渤    | 45    | 1      | 18800001111  |
+| 2     | 冰冰    | 35    | 2      | 18800002222  |
+| 3     | 阿云    | 55    | 1      | 18800008888  |
+| 4     | 李彦宏  | 50    | 1      | 18800099999  |
+
+**用户教育信息表(tb_user_edu)**
+| 序 id | degree | major      | primary school    | middle school      | university         | userid |
+|-------|--------|------------|-------------------|--------------------|--------------------|--------|
+| 1     | 本科   | 舞蹈       | 静安区第一小学    | 静安区第一中学     | 北京舞蹈学院       | 1      |
+| 2     | 硕士   | 表演       | 朝阳区第一小学    | 朝阳区第一中学     | 北京电影学院       | 2      |
+| 3     | 本科   | 英语       | 杭州市第一小学    | 杭州市第一中学     | 杭州师范大学       | 3      |
+| 4     | 本科   | 应用数学   | 阳泉第一小学      | 阳泉区第一中学     | 清华大学           | 4      |
+</center>
+
+```mysql
+create table if not exists tb_user(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    name varchar(10) not null comment '姓名，不为空',
+    age int check (age > 0 and age <= 120) comment '年龄，大于0，并且小于等于120',
+    status char(1) default '1' comment '状态，默认值为1',
+    gender char(1) comment '性别',
+    phone varchar(11) not null unique comment '手机号，不为空，并且唯一'
+) commit '用户基本信息表';
+
+create table if not exists tb_user_edu(
+    id int primary key auto_increment comment '主键，并且自动增长',
+    degree varchar(10) comment '学历',
+    major varchar(10) comment '专业',
+    primary_school varchar(10) comment '小学',
+    middle_school varchar(10) comment '中学',
+    university varchar(10) comment '大学',
+    userid int comment '用户ID，外键，引用用户基本信息表的主键',
+    constraint fk_user_edu_userid foreign key(userid) references tb_user(id) on update cascade on delete cascade
+) commit '用户教育信息表';
+
+insert into tb_user(name, age, status, gender, phone) values
+    ('黄渤', 45, 1, 1, '18800001111'), 
+    ('冰冰', 35, 1, 2, '18800002222'), 
+    ('阿云', 55, 1, 1, '18800008888'), 
+    ('李彦宏', 50, 1, 1, '18800099999');
+
+insert into tb_user_edu(degree, major, primary_school, middle_school, university, userid) values
+    ('本科', '舞蹈', '静安区第一小学', '静安区第一中学', '北京舞蹈学院', 1), 
+    ('硕士', '表演', '朝阳区第一小学', '朝阳区第一中学', '北京电影学院', 2), 
+    ('本科', '英语', '杭州市第一小学', '杭州市第一中学', '杭州师范大学', 3), 
+    ('本科', '应用数学', '阳泉第一小学', '阳泉区第一中学', '清华大学', 4);
+```
+
+### 查询
+
+### 内连接查询
+### 外连接查询
+### 自连接查询
+### 联合查询(UNION, UNION ALL)
+### 子查询
 
 
 # 补充篇

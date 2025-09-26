@@ -21,15 +21,18 @@ import { getTranslateLanguageFromConfig } from "./utils/language-utils";
 const SITE_LANG = "zh_CN"; // 语言代码，例如：'en', 'zh_CN', 'ja' 等。
 
 export const siteConfig: SiteConfig = {
-	title: "这有一个站点喵",
-	subtitle: "based Mizuki",
+	// 基本信息
+	title: "这有一个站点喵", // 网站标题（显示在浏览器标签页和页面头部）
+	subtitle: "based Mizuki", // 网站副标题（通常显示在主页横幅下方）
+	lang: SITE_LANG, // 网站的默认语言，影响日期格式、翻译等功能（不需要配置，会根据 SITE_LANG 自动设置）
 
-	lang: SITE_LANG,
-
+	// 主题颜色
 	themeColor: {
 		hue: 345, // 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
 		fixed: false, // 对访问者隐藏主题色选择器
 	},
+
+	// 翻译配置
 	translate: {
 		enable: true, // 启用翻译功能
 		service: "client.edge", // 使用 Edge 浏览器翻译服务
@@ -39,12 +42,15 @@ export const siteConfig: SiteConfig = {
 		ignoreClasses: ["ignore", "banner-title", "banner-subtitle"], // 翻译时忽略的 CSS 类名
 		ignoreTags: ["script", "style", "code", "pre"], // 翻译时忽略的 HTML 标签
 	},
+
+	// 横幅设置
+	// （横幅设置控制主页顶部的横幅显示）
 	banner: {
-		enable: true, // 是否启动Banner壁纸模式
+		enable: true, // 是否启用横幅
 
 		// 支持单张图片或图片数组，当数组长度 > 1 时自动启用轮播
-		src: {
-			desktop: [
+		src: { 		// 横幅图片地址（相对于 /src 目录，如果以 / 开头则相对于 /public 目录）
+			desktop: [ 		// 桌面端横幅图片
 				"/assets/desktop-banner/d1.webp",
 				"/assets/desktop-banner/d2.webp",
 				"/assets/desktop-banner/d3.webp",
@@ -53,8 +59,8 @@ export const siteConfig: SiteConfig = {
 				"/assets/desktop-banner/d6.webp",
 				"/assets/desktop-banner/d7.webp",
 				"/assets/desktop-banner/d8.webp",
-			], // 桌面横幅图片
-			mobile: [
+			],
+			mobile: [ 		// 移动端横幅图片
 				"/assets/mobile-banner/m1.webp",
 				"/assets/mobile-banner/m2.webp",
 				"/assets/mobile-banner/m3.webp",
@@ -63,30 +69,27 @@ export const siteConfig: SiteConfig = {
 				"/assets/mobile-banner/m6.webp",
 				"/assets/mobile-banner/m7.webp",
 				"/assets/mobile-banner/m8.webp",
-			], // 移动横幅图片
-		}, // 使用本地横幅图片
+			],
+		},
 
 		position: "center", // 等同于 object-position，仅支持 'top', 'center', 'bottom'。默认为 'center'
 
 		carousel: {
 			enable: true, // 为 true 时：为多张图片启用轮播。为 false 时：从数组中随机显示一张图片
-
 			interval: 1, // 轮播间隔时间（秒）
 		},
 
 		homeText: {
 			enable: true, // 在主页显示自定义文本
 			title: "belgnasの站点", // 主页横幅主标题
-
-			subtitle: [
+			subtitle: [ 	// 主页横幅副标题，支持多文本
 				"based on Mizuki",
 				"喵喵喵",
 				"最喜欢qiqimora喵",
 				"一只傲娇猫娘",
-			], // 主页横幅副标题，支持多文本
+			],
 			typewriter: {
 				enable: true, // 启用副标题打字机效果
-
 				speed: 100, // 打字速度（毫秒）
 				deleteSpeed: 50, // 删除速度（毫秒）
 				pauseTime: 2000, // 完全显示后的暂停时间（毫秒）
@@ -94,9 +97,8 @@ export const siteConfig: SiteConfig = {
 		},
 
 		credit: {
-			enable: true, // 显示横幅图片来源文本
-
-			text: "本喵のai绘画作品 + 好看的图片喵", // 要显示的来源文本
+			enable: false, // 显示横幅图片来源文本
+			text: "本猫娘のai绘画作品 + 好看的图片喵", // 要显示的来源文本
 			url: "", // （可选）原始艺术品或艺术家页面的 URL 链接
 		},
 
@@ -104,10 +106,13 @@ export const siteConfig: SiteConfig = {
 			transparentMode: "full", // 导航栏透明模式："semi" 半透明加圆角，"full" 完全透明
 		},
 	},
+
+	// 目录配置
 	toc: {
 		enable: true, // 启用目录功能
 		depth: 3, // 目录深度，1-6，1 表示只显示 h1 标题，2 表示显示 h1 和 h2 标题，依此类推
 	},
+	
 	generateOgImages: false, // 启用生成OpenGraph图片功能,注意开启后要渲染很长时间，不建议本地调试的时候开启
 	favicon: [
 		// 留空以使用默认 favicon
@@ -161,9 +166,14 @@ export const fullscreenWallpaperConfig: FullscreenWallpaperConfig = {
 
 export const navBarConfig: NavBarConfig = {
 	links: [
-		LinkPreset.Home,
-		LinkPreset.Archive,
+		LinkPreset.Home, // 首页链接
+		LinkPreset.Archive, // 归档页面链接
 		// 支持自定义导航栏链接,并且支持多级菜单,3.1版本新加
+		// {
+		// 	name: "GitHub",    // 自定义链接名称
+		// 	url: "https://github.com/matsuzaka-yuki",
+		// 	external: true,     // 是否为外部链接
+    	// },
 		{
 			name: "链接",
 			url: "/links/",
@@ -197,7 +207,7 @@ export const navBarConfig: NavBarConfig = {
 				LinkPreset.Anime,
 				LinkPreset.Diary,
 				{
-					name: "Gallery",
+					name: "相册",
 					url: "/albums/",
 					icon: "material-symbols:photo-library",
 				},
@@ -235,26 +245,27 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/avatar.jpg", // 相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录
-	name: "belgnas",
-	bio: "喵喵喵喵喵",
+	avatar: "assets/images/avatar.jpg", // 头像图片路径（相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录）
+	name: "belgnas", // 用户名
+	bio: "喵喵喵喵喵", // 个人简介
 	
-	links: [
+	links: [ // 社交链接
 		{
-			name: "Bilibli",
-			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/1808504869",
+			name: "Bilibli", // 链接名称
+			icon: "fa6-brands:bilibili", // 图标
+			url: "https://space.bilibili.com/1808504869", // 链接地址
 		},
-		// {
-		// 	name: "Gitee",
-		// 	icon: "mdi:git",
-		// 	url: "https://gitee.com/matsuzakayuki",
-		// },
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/belgnas/belgnas.github.io",
 		},
+		// ...更多链接
+		// {
+		// 	name: "Gitee",
+		// 	icon: "mdi:git",
+		// 	url: "https://gitee.com/matsuzakayuki",
+		// },
 		// {
 		// 	name: "Discord",
 		// 	icon: "fa6-brands:discord",
@@ -464,8 +475,9 @@ export const pioConfig: import("./types/config").PioConfig = {
 			"不要戳我的头啦",
 			"hentai",
 			"今天也请加油喵",
+			"不可以这样欺负我啦！",
 		], // 触摸提示
-		home: "点击这里返回首页喵", // 首页提示
+		home: "点击这里返回首页喵！", // 首页提示
 		skin: ["想看看我的新衣服吗？", "新衣服看起来还不错喵"], // 换装提示
 		close: "QWQ 下次见喵", // 关闭提示
 		link: "https://github.com/belgnas/belgnas.github.io", // 关于链接

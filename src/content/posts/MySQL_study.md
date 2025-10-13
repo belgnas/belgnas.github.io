@@ -3,13 +3,13 @@ title: MySQL_学习笔记
 # 文章标题(必需)
 published: 2025-09-16
 # 文章发布日期，格式为YYYY-MM-DD
-pinned: true
+pinned: false
 # 是否置顶文章，true表示置顶
 description: 这是MySQL的学习笔记，记录了我在学习MySQL过程中的一些知识和经验。
 # 文章描述(必需)
 tags: [MySQL]
 # 文章标签数组，用于标记文章主题
-category: 学习笔记
+category: 计算机基础
 # 文章分类，用于组织文章
 
 licenseName: "Unlicensed"
@@ -22,19 +22,18 @@ date: 2025-09-02
 # 文章创建日期
 pubDate: 2025-09-16
 # 文章发布日期(与published类似)
-series: "Markdown"
 ---
 
 # MySQL
 
 ## MySQL启动/停止
-```
+``` shell
 net start mysql80
 net stop mysql80
 ```
 
 ## MySQL客户端连接
-```
+``` shell
 客户端自带命令行
 mysql [-h 127.0.0.1] [-p 3306] -u root -p
 ```
@@ -42,7 +41,7 @@ mysql [-h 127.0.0.1] [-p 3306] -u root -p
 ## SQL语句
 ### **1. DDL：数据定义语言**
 #### 1. 查询数据库（所有/当前）
-```
+``` sql
 SHOW DATABASES;
 
 SELECT DATABASE();
@@ -51,7 +50,7 @@ SELECT DATABASE();
 * `SELECT DATABASE();` 会显示当前正在使用的数据库。如果你刚登录 MySQL，通常会显示 `NULL`，因为还没有选择任何数据库。
 --- 
 #### 2. 创建数据库
-```
+``` sql
 CREATE DATABASE [IF NOT EXISTS] 数据库名称 [DEFAULT CHARSET 字符集] [COLLATE 排序规则];
 ```
 * 执行后，你应该会看到 `Query OK, 1 row affected` 的提示，这表示数据库创建成功了。
@@ -59,21 +58,21 @@ CREATE DATABASE [IF NOT EXISTS] 数据库名称 [DEFAULT CHARSET 字符集] [COL
 * `DEFAULT CHARSET` 和 `COLLATE` 也是可选的，分别用来指定数据库的默认字符集和排序规则。如果不指定，MySQL 会使用默认设置，通常是 `utf8mb4` 字符集和 `utf8mb4_general_ci` 排序规则。
 ---
 #### 3. 使用数据库
-```
+``` sql
 USE 数据库名称;
 ```
 * 这个命令告诉 MySQL：从现在开始，我要操作哪个数据库了。
 * 执行后，你应该会看到 `Database changed` 的提示。这意味着你已经"进入"了learning_db，接下来所有的操作都将在这个数据库里进行。
 ---
 #### 4. 删除数据库
-```
+``` sql
 DROP DATABASE [IF EXISTS] 数据库名称;
 ```
 * `IF EXISTS` 是一个可选的部分，它的作用是：如果数据库不存在，就不报错，继续执行后面的命令。
 * 执行后，你会看到 `Query OK, 0 rows affected` 的提示，这表示数据库删除成功了。
 ---
 #### 5. 创建数据表
-```
+``` sql
 CREATE TABLE 表名称 (
     列名称1 数据类型1 [COMMENT '列注释'],
     列名称2 数据类型2 [COMMENT '列注释'],
@@ -81,7 +80,7 @@ CREATE TABLE 表名称 (
 ); COMMENT '表注释';
 ```
 例子：创建一个 users (用户) 表，用来存放用户信息。这个表将有3个列：id, name, email。
-```
+``` sql
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
     name VARCHAR(50) COMMENT '用户名',
@@ -106,19 +105,19 @@ CREATE TABLE users (
 * `);`: 结束整个 CREATE TABLE 命令。
 ---
 #### 6. 查询数据表(所有)
-```
+``` sql
 SHOW TABLES;
 ```
 * 执行后，你会看到一列数据表名称，包括我们刚刚创建的 users。
 ---
 #### 7. 查看数据表结构
-```
+``` sql
 DESCRIBE 表名称;
 ```
 * `DESCRIBE` (可以简写为 DESC) 命令会显示表的列、数据类型等信息，非常有用。
 ---
 #### 8. 查询指定表的建表语句
-```
+``` sql
 SHOW CREATE TABLE 表名称;
 ```
 * 执行后，你会看到一个 SQL 语句，它就是用来创建这个表的。
@@ -126,11 +125,11 @@ SHOW CREATE TABLE 表名称;
 * 你可以把这个语句复制下来，用来备份表结构，或者在其他数据库中创建相同的表。
 ---
 #### 9. 添加表结构
-```
+``` sql
 ALTER TABLE 表名称 ADD 列名称 数据类型(长度) [COMMENT '列注释'] [约束];
 ```
 例子：向 users 表添加一个 age 列，用来存储用户年龄。
-```
+``` sql
 ALTER TABLE users ADD age INT(3) COMMENT '用户年龄';
 ```
 * 执行成功后，你会看到 `Query OK, 0 rows affected` 的提示。
@@ -151,19 +150,19 @@ ALTER TABLE users ADD age INT(3) COMMENT '用户年龄';
 ---
 #### 10. 修改表结构
 修改数据类型
-```
+``` sql
 ALTER TABLE 表名称 MODIFY 列名称 数据类型(长度);
 ```
 例子：修改 users 表的 age 列，将数据类型改为 INT(4)
-```
+``` sql
 ALTER TABLE users MODIFY age INT(4);
 ```
 修改列名和数据类型
-```
+``` sql
 ALTER TABLE 表名称 CHANGE 旧列名称 新列名称 数据类型(长度) [COMMENT '列注释'] [约束];
 ```
 例子：修改 users 表的 age 列，将列名改为 age_new，数据类型改为 INT(4)
-```
+``` sql
 ALTER TABLE users CHANGE age age_new INT(4);
 ```
 * 命令详解:
@@ -172,11 +171,11 @@ ALTER TABLE users CHANGE age age_new INT(4);
     * `COMMENT '用户年龄'`: 给 age 列添加注释，说明它的作用是存储用户年龄。
 ---
 #### 11. 删除表
-```
+``` sql
 ALTER TABLE 表名称 DROP 列名称;
 ```
 例子：删除 users 表的 age_new 列
-```
+``` sql
 ALTER TABLE users DROP age_new;
 ```
 * 命令详解:
@@ -184,11 +183,11 @@ ALTER TABLE users DROP age_new;
     * `DROP age_new`: 删除 age_new 列。
 ---
 #### 12. 删除指定表，并重建该表
-```
+``` sql
 TRUNCATE TABLE 表名称;
 ```
 例子：删除 users 表的所有数据
-```
+``` sql
 TRUNCATE TABLE users;
 ```
 * 命令详解:
@@ -198,7 +197,7 @@ TRUNCATE TABLE users;
 
 ### **2. DML：数据操作语言**
 #### 13. 插入数据
-```
+``` sql
 1. 给指定的列插入数据
 INSERT INTO 表名称 (列1, 列2, ...) VALUES (值1, 值2, ...);
 
@@ -228,7 +227,7 @@ INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
 #### 14. 更新数据 (UPDATE)
  * !! 超级重要警告 !!  
    UPDATE 是一个“危险”的命令！如果你在 UPDATE 时忘记使用 WHERE 子句，它会把 整个表 的所有记录都更新掉！所以，使用 UPDATE 时，WHERE 几乎总是必需的。
- ```
+ ``` sql
  1. 给指定的列更新数据
  UPDATE 表名称 SET 列1 = 值1, 列2 = 值2, ... [WHERE 条件];
 
@@ -236,7 +235,7 @@ INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
  UPDATE 表名称 SET 列1 = 值1, 列2 = 值2, ...;
  ```
  例子： id 为 4 的那个 Alice，想把她的邮箱 alice_2@work.com 改成 new_alice@example.com。
- ```
+ ``` sql
  UPDATE users SET email = 'new_alice@example.com' WHERE id = 4;
  ```
  * 命令详解:
@@ -248,7 +247,7 @@ INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
   * !!! 超级重要警告 !!!  
     比 `UPDATE` 更危险的警告：  
     DELETE 命令是 不可逆 的！如果你执行 DELETE 时忘记了 WHERE 子句，它会 删除表中的所有数据，而且通常无法恢复！所以，请务必、一定、时刻带着 WHERE 使用 DELETE！
-  ```
+  ``` sql
   1. 给指定的列删除数据
   DELETE FROM 表名称 [WHERE 条件];
 
@@ -256,7 +255,7 @@ INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
   DELETE FROM 表名称;
   ```
   例子：删除 name 为 'Charlie' 的用户
-  ```
+  ``` sql
   DELETE FROM users WHERE name = 'Charlie';
   ```
   * 命令详解:
@@ -266,11 +265,11 @@ INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
 
 ### **3. DQL：数据查询语言**
 #### ps：DQL语法总览
-```
+``` sql
 SELECT 列名称 FROM 表名称 WHERE 条件 GROUP BY 分组后列名称 HAVING 分组后条件 ORDER BY 排序 LIMIT 分类参数
 ```
 #### 16. 查询数据(SELECT)
-```
+``` sql
 1. 查询多个字段
 SELECT 列名称1, 列名称2... FROM 表名;
 SELECT * FROM 表名称;
@@ -282,9 +281,9 @@ ps：在这里面"AS"关键字是可以省略的
 3. 去除重复记录查询
 SELECT DISTINCT 列名称 FROM 表名;
 
-```
+``` 
 例子： 查询 users 表中的所有数据
-```
+``` sql
 SELECT * FROM users;
 ```
 * SELECT 是 SQL 的灵魂，我们用它来从表中“选择”我们想看的数据。
@@ -294,11 +293,11 @@ SELECT * FROM users;
 * `FROM users`: 从 users 表中。
 ---
 #### 17. 带条件的查询 (WHERE 子句)
-```
+``` sql
 SELECT * FROM 表名称 WHERE 条件;
 ```
 例子：查询 users 表中 name 是 'Bob' 的用户
-```
+``` sql
 SELECT * FROM users WHERE name = 'Bob';
 ```
 * WHERE 子句让我们可以添加过滤条件，只返回符合条件的行。
@@ -334,11 +333,11 @@ SELECT * FROM users WHERE name = 'Bob';
 ---
 #### 18. 聚合查询
 ps: 聚合 就是将一列数据作为一个整体，进行纵向计算。
-```
+``` sql
 SELECT 聚合函数(列名称) FROM 表名称;
 ```
 例子：查询 users 表中所有用户的平均年龄
-```
+``` sql
 SELECT AVG(age) FROM users;
 ```
 * 常见的聚合函数有：
@@ -354,11 +353,11 @@ SELECT AVG(age) FROM users;
   * 聚合函数会忽略 NULL 值。
 ---
 #### 19. 分组查询(GROUP BY)
-```
+``` sql
 SELECT 列名称 FROM 表名称 [WHERE 条件] GROUP BY 列名称 [HAVING 分组后过滤的条件];
 ```
 例子：查询 users 表中每个 age 分组的用户数量
-```
+``` sql
 SELECT age, COUNT(*) FROM users GROUP BY age HAVING COUNT(*) > 1;
 ```
 * where 和 having 的区别
@@ -366,11 +365,11 @@ SELECT age, COUNT(*) FROM users GROUP BY age HAVING COUNT(*) > 1;
   * 判断条件不同：where 不能对聚合函数进行过滤，而 having 可以。
 ---
 #### 20. 排序查询(ORDER BY)
-```
+``` sql
 SELECT 列名称列表 FROM 表名称 ORDER BY 列名称1 排序方式1, 列名称2 排序方式2...;
 ```
 例子：按名字的字母顺序，查询所有用户
-```
+``` sql
 SELECT name, age FROM users ORDER BY name ASC;
 ```
 * `ORDER BY` 子句让我们可以对查询结果进行排序。
@@ -378,11 +377,11 @@ SELECT name, age FROM users ORDER BY name ASC;
 * `DESC` 表示降序 (从Z到A, 从大到小)，不是默认选项，不可以省略。
 ---
 #### 21. 分页查询(LIMIT)
-```
+``` sql
 SELECT 列名称列表 FROM 表名称 LIMIT 起始索引, 查询记录数;
 ```
 例子：查询 users 表中前 5 条数据
-```
+``` sql
 SELECT * FROM users LIMIT 5;
 ```
 * `LIMIT` 子句让我们可以限制查询结果的数量。
@@ -399,20 +398,20 @@ SELECT * FROM users LIMIT 5;
 ### **4. DCL：数据控制语言**
 #### 22. 用户管理
 1. 查询用户
-```
+``` sql
 USE mysql;
 SELECT * FROM user;
 ```
 2. 创建用户
-```
+``` sql
 CREATE USER '用户名'@'主机名' IDENTIFIED BY '密码';
 ```
 3. 修改用户密码
-```
+``` sql
 ALTER USER '用户名'@'主机名' IDENTIFIED WITH mysql_native_password BY '新密码';
 ```
 4. 删除用户
-```
+``` sql
 DROP USER '用户名'@'主机名';
 ```
 例子：
@@ -427,15 +426,15 @@ DROP USER 'belgnas'@'localhost';
 ---
 #### 23. 权限管理
 1. 查询权限
-```
+``` sql
 SHOW GRANTS FOR '用户名'@'主机名';
 ```
 2. 授予权限
-```
+``` sql
 GRANT 权限列表 ON 数据库名.表名 TO '用户名'@'主机名';
 ```
 3. 撤销权限
-```
+``` sql
 REVOKE 权限列表 ON 数据库名.表名 FROM '用户名'@'主机名';
 ```
 * 常用权限：
@@ -484,83 +483,83 @@ REVOKE 权限列表 ON 数据库名.表名 FROM '用户名'@'主机名';
 通用语法：SELECT 函数名(参数列表)
 
 -- 字符串拼接，将S1，S2，..Sn拼接成一个字符串
-```
+``` sql
 CONCAT(S1,S2....Sn)
 ```
 例子：
-```
+``` sql
 SELECT CONCAT('hello', 'mysql');
 ```
 输出结果：hello mysql
 
 -- 将字符串str全部转为小写
-```
+``` sql
 LOWER(str)
 ```
 例子：
-```
+``` sql
 SELECT LOWER('HELLO');
 ```
 输出结果：hello
 
 -- 将字符串str全部转为大写
-```
+``` sql
 UPPER(str)
 ```
 例子：
-```
+``` sql
 SELECT UPPER('hello');
 ```
 输出结果：HELLO
 
 -- 左填充，用字符串pad对str的左边进行填充，达到n个字符串长度
-```
+``` sql
 LPAD(str,n,pad)
 ```
 例子：
-```
+``` sql
 SELECT LPAD('hello', 10, '*');
 ```
 输出结果：****hello
 
 -- 右填充，用字符串pad对str的右边进行填充，达到n个字符串长度
-```
+``` sql
 RPAD(str,n,pad)
 ```
 例子：
-```
+``` sql
 SELECT RPAD('hello', 10, '*');
 ```
 输出结果：hello****
 
 -- 去掉字符串头部和尾部的空格
-```
+``` sql
 TRIM(str)
 ```
 例子：
-```
+``` sql
 SELECT TRIM('  hello mysql  ');
 ```
 输出结果：hello mysql
 
 -- 返回从字符串str从start位置起的len个长度的字符串
-```
+``` sql
 SUBSTRING(str,start,len)
 
 ```
 * ps:字符串的索引`从1开始`
 例子：
-```
+``` sql
 SELECT SUBSTRING('hello', 1, 3);
 ```
 输出结果：hel
 
 -- 替换字符串str中的子字符串 substr1 为 substr2 
-```
+``` sql
 REPLACE(str,substr1,substr2)
 ```
 例子：
-```
+``` sql
 SELECT REPLACE('hello', 'l', 'L');
 ```
 输出结果：heLLo
@@ -569,88 +568,88 @@ SELECT REPLACE('hello', 'l', 'L');
 
 ### 2. 数值函数
 -- 向上取整
-```
+``` sql
 CEILING(x)
 ```
 例子：
-```
+``` sql
 SELECT CEILING(2.3);
 ```
 输出结果：3
 
 -- 向下取整
-```
+``` sql
 FLOOR(x)
 ```
 例子：
-```
+``` sql
 SELECT FLOOR(2.3);
 ```
 输出结果：2
 
 -- 返回x/y的模
-```
+``` sql
 MOD(x,y)
 ```
 例子：
-```
+``` sql
 SELECT MOD(10, 3);
 ```
 输出结果：1
 
 -- 返回0~1的随机数
-```
+``` sql
 RAND()
 ```
 例子：
-```
+``` sql
 SELECT RAND();
 ```
 输出结果：0.5577222222222222（随机数）
 
 -- 四舍五入
-```
+``` sql
 ROUND(x)
 ```
 例子：
-```
+``` sql
 SELECT ROUND(2.3);
 ```
 输出结果：2
 
 -- 取绝对值
-```
+``` sql
 ABS(x)
 ```
 例子：
-```
+``` sql
 SELECT ABS(-2);
 ```
 输出结果：2
 
 -- 取平方根
-```
+``` sql
 SQRT(x)
 ```
 例子：
-```
+``` sql
 SELECT SQRT(9);
 ```
 输出结果：3
 
 -- 取x的n次方
-```
+``` sql
 POWER(x,n)
 ```
 例子：
-```
+``` sql
 SELECT POWER(2, 3);
 ```
 输出结果：8
 
 案例实现：生成一个六位数的随机验证码
 
-```
+``` sql
 SELECT LPAD(ROUND(RAND() * 1000000), 6, '0');
 ```
 输出结果：123456（随机数）
@@ -663,88 +662,88 @@ SELECT LPAD(ROUND(RAND() * 1000000), 6, '0');
 常见日期函数：
 
 -- 返回当前日期
-```
+``` sql
 CURDATE()
 ```
 例子：
-```
+``` sql
 SELECT CURDATE();
 ```
 输出结果：2025-09-16（当前日期）
 
 -- 返回当前时间
-```
+``` sql
 CURTIME()
 ```
 例子：
-```
+``` sql
 SELECT CURTIME();
 ```
 输出结果：00:37:56（当前时间）
 
 -- 返回当前日期和时间
-```
+``` sql
 NOW()
 ```
 例子：
-```
+``` sql
 SELECT NOW();
 ```
 输出结果：2025-09-16 00:37:56（当前日期和时间）
 
 -- 获取指定date的年份
-```
+``` sql
 YEAR(date)
 ```
 例子：
-```
+``` sql
 SELECT YEAR('2025-09-16');
 ```
 输出结果：2025
 
 -- 获取指定date的月份
-```
+``` sql
 MONTH(date)
 ```
 例子：
-```
+``` sql
 SELECT MONTH('2025-09-16');
 ```
 输出结果：9
 
 -- 获取指定date的日期
-```
+``` sql
 DAY(date)
 ```
 例子：
-```
+``` sql
 SELECT DAY('2025-09-16');
 ```
 输出结果：16
 
 -- 返回一个日期/时间值加上指定的时间间隔expr后的时间值
-```
+``` sql
 DATE_ADD(date,INTERVAL expr type)
 ```
 例子：
-```
+``` sql
 SELECT DATE_ADD('2025-09-16', INTERVAL 1 DAY);
 ```
 输出结果：2025-09-17（当前日期加1天）
 
 -- 计算两个日期（起始时间date1和结束时间date2）之间的天数
-```
+``` sql
 DATEDIFF(date1,date2)
 ```
 例子：
-```
+``` sql
 SELECT DATEDIFF('2025-09-16', '2025-09-15');
 ```
 输出结果：1（相差1天）
 
 案例：
 -- 计算员工入职时间到当前时间的天数
-```
+``` sql
 SELECT DATEDIFF(NOW(), '2025-09-16');
 ```
 输出结果：1（相差1天）
@@ -758,11 +757,11 @@ SELECT DATEDIFF(NOW(), '2025-09-16');
 流程函数可以在SQL语句中实现条件筛选，从而提高语句的效率
 
 -- 如果value为true，返回t，否则返回f
-```
+``` sql
 IF(value, t, f)
 ```
 例子：
-```
+``` sql
 SELECT IF(1 > 0, '是', '否');
 ```
 输出结果：是
@@ -771,11 +770,11 @@ SELECT IF(1 > 0, '是', '否');
   * `IF(1 > 0, '是', '否')`：如果条件为真（1 > 0），则返回表达式1（'是'）；否则返回表达式2（'否'）。
 
 -- 如果value1为不为空，返回value1，否则返回value2
-```
+``` sql
 IFNULL(value1, value2)
 ```
 例子：
-```
+``` sql
 SELECT IFNULL(NULL, '默认值');
 ```
 输出结果：默认值
@@ -783,7 +782,7 @@ SELECT IFNULL(NULL, '默认值');
   * `IFNULL(NULL, '默认值')`：如果value为NULL，则返回表达式2（'默认值'）；否则返回value。
 
 -- 如果value1为true，返回value1，……，否则返回default默认值
-```
+``` sql
 CASE
 WHEN [value1] THEN [result1]
 WHEN [value2] THEN [result2]
@@ -798,7 +797,7 @@ END
   * `END`：结束`CASE`语句。
 
 -- 如果expr的值等于value1，返回result1，……，否则返回default默认值
-```
+``` sql
 CASE [expr]
 WHEN [value1] THEN [result1]
 WHEN [value2] THEN [result2]
@@ -814,7 +813,7 @@ END
 
 
 -- 案例：根据员工的年龄，返回不同的等级（假定已经有一个数据库）
-```
+``` sql
 SELECT
     name,
     age,
@@ -875,7 +874,7 @@ ps：
 | status | 状态     | char(1)  | 如果没有指定值，默认为1 | DEFAULT |
 | gender | 性别     | char(1)  | 无       |            |
 ##### 代码：
-```mysql
+``` sql
 create table if not exists t_user(
     id int primary key auto_increment comment '主键，并且自动增长',
     name varchar(10) not null unique comment '姓名，不为空，并且唯一',
@@ -883,9 +882,9 @@ create table if not exists t_user(
     status char(1) default '1' comment '状态，默认值为1',
     gender char(1) comment '性别'
 ) commit '用户表';
-```
+``` 
 ##### 测试：
-```mysql
+``` sql
 -- 插入数据
 insert into t_user(name, age, status, gender) values('张三', 18, '1', '男');
 insert into t_user(name, age, status, gender) values('李四', 20, '1', '女');
@@ -901,7 +900,7 @@ insert into t_user(name, age, status, gender) values('张三', 23, '1', '男');
 * 关键字：`FOREIGN KEY`
 #### 添加外键
 * 语法：（添加外键）
-```mysql
+``` sql
 CREATE TABLE 表名(
   字段名 数据类型,
   ...
@@ -911,17 +910,17 @@ CREATE TABLE 表名(
 ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段名) REFERENCES 主表(主表列名);
 ```
 * 例子
-```
+``` sql
 alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references dept(id);
 ```
 * 解释：往emp表添加一个外键约束，约束名称为fk_emp_dept_id，外键字段为dept_id，引用的主表为dept，引用的主表字段为id。
 #### 删除外键
 * 语法：
-```mysql
+``` sql
 ALTER TABLE 表名 DROP FOREIGN KEY 外键名称;
 ```
 * 例子：
-```mysql
+``` sql
 -- 删除emp表的外键约束
 alter table emp drop foreign key fk_emp_dept_id;
 ```
@@ -938,12 +937,12 @@ alter table emp drop foreign key fk_emp_dept_id;
 | SET DEFAULT | 父表有变更时，子表将外键设为一个默认值（Innodb不支持）|
 
 * 语法（更改删除/更新行为）
-```
+``` sql
 ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段) REFERENCES 主表名(主表字段名) ON UPDATE 行为 ON DELETE 行为;
 ```
 
 * 例子：
-```mysql
+``` sql
 -- 更改emp表的外键约束，约束名称为fk_emp_dept_id，删除/更新行为为CASCADE
 alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references dept(id) on update cascade on delete cascade;
 ```
@@ -956,7 +955,7 @@ alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references de
 * 案例：部门与员工
 * 关系：一个部门可以有多个员工，一个员工只归属于一个部门
 * 实现：在多的一方建立外键，指向一的一方的主键
-```mysql
+``` sql
 -- 部门表
 create table if not exists dept(
     id int primary key auto_increment comment '主键，并且自动增长',
@@ -1009,7 +1008,7 @@ alter table emp add constraint fk_emp_dept_id foreign key(dept_id) references de
 | 6     | 3          | 3         |
 </center>
 
-```mysql
+``` sql
 -- 学生表
 create table if not exists student(
     id int primary key auto_increment comment '主键，并且自动增长',
@@ -1064,7 +1063,7 @@ insert into student_course(student_id, course_id) values(1, 1), (1, 2), (2, 2), 
 | 4     | 本科   | 应用数学   | 阳泉第一小学      | 阳泉区第一中学     | 清华大学           | 4      |
 </center>
 
-```mysql
+``` sql
 create table if not exists tb_user(
     id int primary key auto_increment comment '主键，并且自动增长',
     name varchar(10) not null comment '姓名，不为空',
@@ -1110,7 +1109,7 @@ insert into tb_user_edu(degree, major, primary_school, middle_school, university
 # 补充篇
 
 ## SQL分类
-```
+``` txt
 DDL: 数据定义语言，用来定义数据库对象（数据库、表、字段）
 DML: 数据操作语言，用来对数据库表中的数据进行增删改
 DQL: 数据查询语言，用来查询数据库中表的记录

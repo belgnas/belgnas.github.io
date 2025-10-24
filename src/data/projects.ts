@@ -17,77 +17,108 @@ export interface Project {
 	tags?: string[];
 }
 
+// 示例项目数据
+// export const projects: Project[] = [
+//   {
+//     id: 'project-1',
+//     name: '项目名称',
+//     description: '项目简短描述',
+//     longDescription: '项目详细描述，支持 Markdown 格式',
+//     category: 'web', // 可选值：'web' | 'mobile' | 'desktop' | 'other'
+//     tags: ['React', 'TypeScript', 'Node.js'],
+//     startDate: new Date('2023-01-01'),
+//     endDate: new Date('2023-06-01'), // 可选，进行中的项目可以不设置
+//     status: 'completed', // 'completed' | 'in-progress' | 'planned'
+//     technologies: [
+//       {
+//         name: 'React',
+//         icon: 'skill-icons:react-dark', // 图标名称
+//         url: 'https://reactjs.org/'
+//       }
+//     ],
+//     links: {
+//       github: 'https://github.com/username/project',
+//       demo: 'https://project-demo.com',
+//       website: 'https://project-website.com'
+//     },
+//     images: [
+//       '/images/projects/project-1-screenshot.jpg'
+//     ],
+//     featured: true // 是否为特色项目
+//   }
+// ];
+
 export const projectsData: Project[] = [
-	{
-		id: "mizuki-blog",
-		title: "Mizuki Blog Theme",
-		description:
-			"Modern blog theme developed based on the Astro framework, supporting multilingual, dark mode, and responsive design features.",
-		image: "",
-		category: "web",
-		techStack: ["Astro", "TypeScript", "Tailwind CSS", "Svelte"],
-		status: "completed",
-		liveDemo: "https://blog.example.com",
-		sourceCode: "https://github.com/example/mizuki",
-		startDate: "2024-01-01",
-		endDate: "2024-06-01",
-		featured: true,
-		tags: ["Blog", "Theme", "Open Source"],
-	},
-	{
-		id: "portfolio-website",
-		title: "Personal Portfolio",
-		description:
-			"Personal portfolio website showcasing project experience and technical skills.",
-		image: "",
-		category: "web",
-		techStack: ["React", "Next.js", "TypeScript", "Framer Motion"],
-		status: "completed",
-		liveDemo: "https://portfolio.example.com",
-		sourceCode: "https://github.com/example/portfolio",
-		startDate: "2023-09-01",
-		endDate: "2023-12-01",
-		featured: true,
-		tags: ["Portfolio", "React", "Animation"],
-	},
-	{
-		id: "task-manager-app",
-		title: "Task Manager App",
-		description:
-			"Cross-platform task management application supporting team collaboration and project management.",
-		image: "",
-		category: "mobile",
-		techStack: ["React Native", "TypeScript", "Redux", "Firebase"],
-		status: "in-progress",
-		startDate: "2024-03-01",
-		tags: ["Mobile", "Productivity", "Team Collaboration"],
-	},
-	{
-		id: "data-visualization-tool",
-		title: "Data Visualization Tool",
-		description:
-			"Data visualization tool supporting multiple chart types and interactive analysis.",
-		image: "",
-		category: "web",
-		techStack: ["Vue.js", "D3.js", "TypeScript", "Node.js"],
-		status: "completed",
-		liveDemo: "https://dataviz.example.com",
-		startDate: "2023-06-01",
-		endDate: "2023-11-01",
-		tags: ["Data Visualization", "Analytics", "Charts"],
-	},
-	{
-		id: "e-commerce-platform",
-		title: "E-commerce Platform",
-		description:
-			"Full-stack e-commerce platform including user management, product management, and order processing features.",
-		image: "",
-		category: "web",
-		techStack: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
-		status: "planned",
-		startDate: "2024-07-01",
-		tags: ["E-commerce", "Full Stack", "Payment Integration"],
-	},
+	// {
+	// 	id: "mizuki-blog",
+	// 	title: "Mizuki Blog Theme",
+	// 	description:
+	// 		"Modern blog theme developed based on the Astro framework, supporting multilingual, dark mode, and responsive design features.",
+	// 	image: "",
+	// 	category: "web",
+	// 	techStack: ["Astro", "TypeScript", "Tailwind CSS", "Svelte"],
+	// 	status: "completed",
+	// 	liveDemo: "https://blog.example.com",
+	// 	sourceCode: "https://github.com/example/mizuki",
+	// 	startDate: "2024-01-01",
+	// 	endDate: "2024-06-01",
+	// 	featured: true,
+	// 	tags: ["Blog", "Theme", "Open Source"],
+	// },
+	// {
+	// 	id: "portfolio-website",
+	// 	title: "Personal Portfolio",
+	// 	description:
+	// 		"Personal portfolio website showcasing project experience and technical skills.",
+	// 	image: "",
+	// 	category: "web",
+	// 	techStack: ["React", "Next.js", "TypeScript", "Framer Motion"],
+	// 	status: "completed",
+	// 	liveDemo: "https://portfolio.example.com",
+	// 	sourceCode: "https://github.com/example/portfolio",
+	// 	startDate: "2023-09-01",
+	// 	endDate: "2023-12-01",
+	// 	featured: true,
+	// 	tags: ["Portfolio", "React", "Animation"],
+	// },
+	// {
+	// 	id: "task-manager-app",
+	// 	title: "Task Manager App",
+	// 	description:
+	// 		"Cross-platform task management application supporting team collaboration and project management.",
+	// 	image: "",
+	// 	category: "mobile",
+	// 	techStack: ["React Native", "TypeScript", "Redux", "Firebase"],
+	// 	status: "in-progress",
+	// 	startDate: "2024-03-01",
+	// 	tags: ["Mobile", "Productivity", "Team Collaboration"],
+	// },
+	// {
+	// 	id: "data-visualization-tool",
+	// 	title: "Data Visualization Tool",
+	// 	description:
+	// 		"Data visualization tool supporting multiple chart types and interactive analysis.",
+	// 	image: "",
+	// 	category: "web",
+	// 	techStack: ["Vue.js", "D3.js", "TypeScript", "Node.js"],
+	// 	status: "completed",
+	// 	liveDemo: "https://dataviz.example.com",
+	// 	startDate: "2023-06-01",
+	// 	endDate: "2023-11-01",
+	// 	tags: ["Data Visualization", "Analytics", "Charts"],
+	// },
+	// {
+	// 	id: "e-commerce-platform",
+	// 	title: "E-commerce Platform",
+	// 	description:
+	// 		"Full-stack e-commerce platform including user management, product management, and order processing features.",
+	// 	image: "",
+	// 	category: "web",
+	// 	techStack: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
+	// 	status: "planned",
+	// 	startDate: "2024-07-01",
+	// 	tags: ["E-commerce", "Full Stack", "Payment Integration"],
+	// },
 ];
 
 // Get project statistics

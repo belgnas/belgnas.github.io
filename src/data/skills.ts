@@ -2,42 +2,54 @@
 // Used to manage data for the skill display page
 
 export interface Skill {
-	id: string;
-	name: string;
-	description: string;
+	id: string; // Skill ID
+	name: string; // Skill name
+	description: string; // Skill description
 	icon: string; // Iconify icon name
-	category: "frontend" | "backend" | "database" | "tools" | "other";
-	level: "beginner" | "intermediate" | "advanced" | "expert";
-	experience: {
+	category: "frontend" | "backend" | "database" | "tools" | "other"; // Skill category
+	level: "beginner" | "intermediate" | "advanced" | "expert"; // Skill level
+	experience: { // Skill experience
 		years: number;
 		months: number;
 	};
 	projects?: string[]; // Related project IDs
-	certifications?: string[];
+	certifications?: string[]; // Optional: Related certifications
 	color?: string; // Skill card theme color
 }
 
-// export const skills: Skill[] = [
-//   {
-//     name: '技能名称',
-//     category: 'frontend', // 技能分类
-//     level: 90, // 技能等级 (0-100)
-//     icon: 'skill-icons:javascript', // 图标名称
-//     description: '技能描述',
-//     experience: '3年', // 经验时长
-//     projects: ['project-1', 'project-2'], // 相关项目ID
-//     certifications: [ // 可选：相关认证
-//       {
-//         name: '认证名称',
-//         issuer: '颁发机构',
-//         date: '2023-01-01',
-//         url: 'https://certification-url.com'
-//       }
-//     ]
-//   }
-// ];
-
 export const skillsData: Skill[] = [
+	// Frontend Skills
+	{
+		id: 'vscode',
+		name: 'Visual Studio Code',
+		description: 'Visual Studio Code 是一个免费、开源的代码编辑器，提供了丰富的插件生态系统，用户可以根据需要安装各种插件来增强其功能。',
+		category: 'tools', // 技能分类
+		level: "intermediate", // 技能等级 (beginner, intermediate, advanced, expert)
+		icon: 'logos:visual-studio-code', // 图标名称
+		experience: { years: 1, months: 2 }, // 格式：{ years: number, months: number }
+		color: '#007ACC',
+	}, 
+	{
+		id: 'cpp',
+		name: 'C++',
+		description: 'C++ 是一种高性能的编程语言，其广泛应用于游戏开发、系统软件和嵌入式开发等领域，支持过程化编程、面向对象编程和泛型编程。',
+		category: 'backend', // 技能分类
+		level: "intermediate", // 技能等级 (beginner, intermediate, advanced, expert)
+		icon: 'logos:c-plusplus', // 图标名称
+		experience: { years: 1, months: 2 }, // 格式：{ years: number, months: number }
+		color: '#00599C',
+	},
+	{
+		id: 'java',
+		name: 'Java',
+		description:
+			"Java 是一种跨平台的、面向对象的编程语言，被广泛应用于企业级应用开发、移动应用开发和服务器端应用开发等领域。",
+		icon: "logos:java",
+		category: "backend",
+		level: "beginner",
+		experience: { years: 0, months: 4 },
+		color: "#ED8B00",
+	},
 	// // Frontend Skills
 	// {
 	// 	id: "javascript",

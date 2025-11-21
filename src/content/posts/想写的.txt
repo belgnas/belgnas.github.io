@@ -1,0 +1,107 @@
+https://www.nowcoder.com/practice/0372242deac541d0b578cc6563395681?channelPut=w252acm
+
+import java.util.Scanner; // 导入Scanner类，用于读取用户输入
+
+// 主类，程序入口
+public class Main {
+    // 主方法，程序从这里开始执行
+    public static void main(String[] args) {
+        // 创建Scanner对象in，用于读取控制台输入
+        Scanner in = new Scanner(System.in);
+        // 读取起始日期a（8位整数，格式YYYYMMDD），用long存储避免整数溢出
+        long a = in.nextLong();
+        // 读取终止日期b（8位整数，格式YYYYMMDD），同样用long存储
+        long b = in.nextLong();
+        // 关闭Scanner流，释放输入资源，避免资源泄露
+        in.close();
+
+        // 定义计数变量count，初始化为0，用于统计[a,b]区间内合法的回文日期数量
+        int count = 0;
+        // 提取起始日期的年份（前4位）：8位日期除以10000，去掉后4位（MMDD），得到YYYY
+        int startYear = (int) (a / 10000);
+        // 提取终止日期的年份（前4位）：逻辑同上
+        int endYear = (int) (b / 10000);
+
+        // 遍历可能的年份：从startYear-1到endYear+1，扩展1年范围
+        // 原因：避免边界遗漏（如a是20000101，可能1999年的某个回文日期仍在[a,b]内）
+        for (int year = startYear - 1; year <= endYear + 1; year++) {
+            // 将当前年份转为4位字符串，不足4位补前导0（如year=5→"0005"）
+            // 确保生成的日期是8位（前4位年份+后4位反转），避免格式错误
+            String yearStr = String.format("%04d", year); 
+            // 反转年份字符串，得到回文的后4位（如yearStr=2011→反转后为1102）
+            String reversed = new StringBuilder(yearStr).reverse().toString();
+            // 拼接前4位年份和后4位反转字符串，得到完整的8位回文日期字符串（如2011+1102=20111102）
+            String dateStr = yearStr + reversed;
+
+            // 定义long类型变量date，用于存储转换后的8位日期数字
+            long date;
+            try {
+                // 将日期字符串转为long类型（8位数字不会溢出long）
+                date = Long.parseLong(dateStr);
+            } catch (NumberFormatException e) {
+                // 异常捕获：理论上8位数字字符串不会触发格式异常，此处仅为预防极端情况，直接跳过
+                continue; 
+            }
+            // 检查当前生成的回文日期是否在[a,b]区间内，不在则跳过后续验证
+            if (date < a || date > b) {
+                continue;
+            }
+
+            // 解析月份：8位日期date是YYYYMMDD，除以100得到YYYYMM，再对100取余得到MM（中间两位）
+            int month = (int) (date / 100 % 100); 
+            // 解析日期：8位日期date对100取余，得到DD（最后两位）
+            int day = (int) (date % 100);         
+
+            // 验证月份合法性：月份必须在1-12之间，否则是无效日期，跳过
+            if (month < 1 || month > 12) {
+                continue;
+            }
+
+            // 定义maxDay变量，存储当前月份的最大合法天数
+            int maxDay;
+            // 用switch判断不同月份的最大天数（按历法规则）
+            switch (month) {
+                // 1、3、5、7、8、10、12月是大月，有31天
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    maxDay = 31;
+                    break; // 跳出switch，进入后续日期验证
+                // 4、6、9、11月是小月，有30天
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    maxDay = 30;
+                    break;
+                // 2月特殊，需判断是否为闰年
+                case 2:
+                    // 闰年判定规则：
+                    // 1. 能被4整除且不能被100整除；
+                    // 2. 能被400整除（覆盖世纪年如2000是闰年，1900不是）
+                    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                        maxDay = 29; // 闰年2月有29天
+                    } else {
+                        maxDay = 28; // 平年2月有28天
+                    }
+                    break;
+                // default：理论上不会触发（前面已验证month在1-12），设为0避免编译错误
+                default:
+                    maxDay = 0; 
+            }
+
+            // 验证日期合法性：日期必须在1到当前月份的最大天数之间
+            if (day >= 1 && day <= maxDay) {
+                // 合法则计数+1
+                count++;
+            }
+        }
+
+        // 输出最终统计结果：[a,b]区间内合法回文日期的总数
+        System.out.println(count);
+    }
+}

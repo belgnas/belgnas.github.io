@@ -62,11 +62,11 @@ draft: false
 date: 2025-12-12
 # 文章创建日期
 
-image:
-  url: 'image1.jpg'
-  # 文章封面图片URL
-  alt: '初音未来图'
-  # 文章封面图片替代文本
+# image:
+#   url: 'image1.jpg'
+#   # 文章封面图片URL
+#   alt: '初音未来图'cd
+#   # 文章封面图片替代文本
 
 pubDate: 2025-12-12
 # 文章发布日期(与published类似)

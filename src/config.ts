@@ -245,8 +245,8 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/avatar.jpg", // 头像图片路径（相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录）
-	name: "belgnas", // 用户名
+	avatar: "assets/images/avatar.webp", // 头像图片路径（相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录）
+	name: "qiqimora", // 用户名
 	bio: "喵喵喵喵喵", // 个人简介
 	
 	links: [ // 社交链接
